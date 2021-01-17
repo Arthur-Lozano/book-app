@@ -31,14 +31,14 @@ app.get('/hello', helloHandler);//Used to test application without database
 
 
 //Handlers
-function homeHandler(request, response) {
-  response.status(200).send('');
-}
 
 function helloHandler(request, response) {
   response.status(200).render('pages/index');//.render instead of .sendFile
 }
 
+function homeHandler(request, response) {
+  response.status(200).render('pages/searches/new');
+}
 
 
 // Connect to DB and Start the Web Server
