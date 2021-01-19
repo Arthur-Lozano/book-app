@@ -3,7 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Google Book Search </title>
+  <ul>
+    <% data.forEach(value => {%>
+    <h2></h2>
+    <li><%= value.name %></li>
+    <li><%= value.qty %></li>
+  })
+  </ul>
 <input type="radio" id="title" name="book" value="title">
 <label for="title">Title</label><br>
 <input type="radio" id="author" name="book" value="author">
