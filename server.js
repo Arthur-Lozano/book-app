@@ -26,11 +26,27 @@ app.set('view engine', 'ejs');// How you can tell you're using ejs at a quick gl
 // app.use(express.urlencoded({extended: true}));
 // Routes
 app.get('/', homeHandler);
+app.post('/searches', searchHandler);
 app.get('/hello', helloHandler);//Used to test application without database
 
 
 
 //Handlers
+
+function searchHandler(request, response) {
+  let key = process.env.WEATHER_API_KEY;
+  const url = `https://api.weatherbit.io/v2.0/forecast/daily?key=${key}&lat=${lat}&lon=${lon}&days=8`;
+  superagent.get(url)
+    .end(value => {
+      const yourBook = value.body.data.map(current => {
+        return new Book(current);
+      });
+      response.status(200).send(yourBook);
+    }).catch(error => {
+      console.log('ERROR', error);
+      response.status(500).send('So sorry, something went wrong.');
+    });
+}
 
 function helloHandler(request, response) {
   response.status(200).render('pages/index');//.render instead of .sendFile
@@ -38,6 +54,18 @@ function helloHandler(request, response) {
 
 function homeHandler(request, response) {
   response.status(200).render('pages/searches/new');
+}
+
+//Constructors
+function Book(result, image) {
+  // Based off movie object
+  this.title = result.original_title;
+  this.overview = result.overview;
+  this.average_votes = result.vote_average;
+  this.total_votes = result.vote_count;
+  this.image_url = image;
+  this.popularity = result.popularity;
+  this.released_on = result.release_date;
 }
 
 
