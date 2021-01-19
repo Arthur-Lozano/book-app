@@ -18,6 +18,12 @@ client.on('error', err => { throw err; });
 // Step 2:  Set up our application/Specify port
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+//Application Middleware
+app.use(express.urlencoded({extended:true}));//Double check
+app.use(express.static('public'));
+
+
 app.set('view engine', 'ejs');// How you can tell you're using ejs at a quick glance
 // app.use(cors());
 
@@ -28,6 +34,7 @@ app.set('view engine', 'ejs');// How you can tell you're using ejs at a quick gl
 app.get('/', homeHandler);
 app.post('/searches', searchHandler);
 app.get('/hello', helloHandler);//Used to test application without database
+app.get('*', ('Sorry, you have reached an error page'));
 
 
 
