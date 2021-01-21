@@ -72,3 +72,16 @@ input[type='submit'] {
   height: 500px;
 }
 
+.homeHead {
+  margin: 0px auto 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.homeHead > button {
+  margin-top: 30px;
+}
+
