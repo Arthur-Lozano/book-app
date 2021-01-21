@@ -10,3 +10,8 @@ button{
   background-color:darkgray;
 }
 
+main{
+  justify-content: center;
+  align-items: center;
+}
+
