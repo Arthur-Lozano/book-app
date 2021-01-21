@@ -7,44 +7,51 @@ require('dotenv').config();
 // Step 1:  Bring in our modules/dependencies
 const express = require('express');
 // const cors = require('cors');
+const cors = require('cors');
 const superagent = require('superagent');
-const pg = require('pg');
-
-// Database Connection Setup
-const client = new pg.Client(process.env.DATABASE_URL);
-client.on('error', err => { throw err; });
-
+// const pg = require('pg');
 
 // Step 2:  Set up our application/Specify port
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-//Application Middleware
-app.use(express.urlencoded({extended:true}));//Double check
-app.use(express.static('public'));
+app.use(cors());
 
 
+// Database Connection Setup
+// const client = new pg.Client(process.env.DATABASE_URL);//Take in path of database server
+// client.connect(); // Use this when database is set up
+// client.on('error', err => { throw err; });
+
+//Application Middleware // EXRPESS MIDDLEWARE// Database Connection Setup
+app.use(express.urlencoded({ extended: true }));//Double check
+app.use(express.static('./public'));
+
+
+//Set the view engine
 app.set('view engine', 'ejs');// How you can tell you're using ejs at a quick glance
-// app.use(cors());
 
 
-// app.use(express.static('public'));
-// app.use(express.urlencoded({extended: true}));
 // Routes
-app.get('/', homeHandler);
-app.post('/searches', searchHandler);
-app.get('/hello', helloHandler);//Used to test application without database
-app.get('*', ('Sorry, you have reached an error page'));
+app.get('/index', homeHandler);
+app.post('/', searchHandler);
+app.get('*', (request, response) => response.status(404).send('This route does not exist'));
 
+
+
+app.post('/searches', showHandler);
 
 
 //Handlers
 
 function searchHandler(request, response) {
-  let key = process.env.WEATHER_API_KEY;
-  const url = `https://api.weatherbit.io/v2.0/forecast/daily?key=${key}&lat=${lat}&lon=${lon}&days=8`;
+  // let SQL = ``
+  // const url = `https://www.googleapis.com/books/v1/volumes?q=+intitle:dune`;
+  const url = `https://www.googleapis.com/books/v1/volumes?q=+inauthor:king`;
+
+  console.log(url);
   superagent.get(url)
-    .end(value => {
+    .then(value => {
+      console.log(value);
       const yourBook = value.body.data.map(current => {
         return new Book(current);
       });
@@ -55,24 +62,23 @@ function searchHandler(request, response) {
     });
 }
 
-function helloHandler(request, response) {
-  response.status(200).render('pages/index');//.render instead of .sendFile
-}
 
 function homeHandler(request, response) {
-  response.status(200).render('pages/searches/new');
+  response.status(200).render('pages/index');
+}
+
+function showHandler(request, response) {
+  response.status(200).render('pages/searches/show');
 }
 
 //Constructors
 function Book(result, image) {
   // Based off movie object
-  this.title = result.original_title;
-  this.overview = result.overview;
-  this.average_votes = result.vote_average;
-  this.total_votes = result.vote_count;
-  this.image_url = image;
-  this.popularity = result.popularity;
-  this.released_on = result.release_date;
+  this.title = result.volumeInfo.title;
+  this.author = result.volumeInfo.arthur;
+  this.isbn = result.isbn;
+  this.image_url = `https://i.imgur.com/J5LVHEL.jpg`;//For missing images
+  this.description = result.description;
 }
 
 
