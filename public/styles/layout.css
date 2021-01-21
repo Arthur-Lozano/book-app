@@ -8,3 +8,11 @@ nav > div {
   width: fit-content;
 }
 
+h2 {
+  text-align: center;
+  padding: 15px 0;
+}
+
+#wrapper {
+  margin: 0 auto;
+}
