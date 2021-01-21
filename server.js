@@ -31,32 +31,38 @@ app.use(express.static('./public'));
 app.set('view engine', 'ejs');// How you can tell you're using ejs at a quick glance
 
 
-// Routes
+//
+app.get('/', searchHandler);
+// app.post('/', searchesHandler);
+// app.get('*', errHandler);
 app.get('/index', homeHandler);
-app.post('/', searchHandler);
-app.get('*', (request, response) => response.status(404).send('This route does not exist'));
 
+// function searchesHandler(req, res) {
+//   res.status(200).render('pages/searches/new')
+//     .catch(error => {
+//       console.log('ERROR', error);
+//       res.status(500).send('So sorry, something went wrong.');
+//     });
 
+// }
 
-app.post('/searches', showHandler);
-
-
-//Handlers
 
 function searchHandler(request, response) {
+  // console.log('!!!!!!!!!!!', request);
   // let SQL = ``
   // const url = `https://www.googleapis.com/books/v1/volumes?q=+intitle:dune`;
   const url = `https://www.googleapis.com/books/v1/volumes?q=+inauthor:king`;
-
-  console.log(url);
+  // console.log(url);
   superagent.get(url)
     .then(value => {
-      console.log(value);
-      const yourBook = value.body.data.map(current => {
+      console.log('!!!!!!!!!!!!!!!!', value.body.items);
+      const yourBook = value.body.items.map(current => {
         return new Book(current);
       });
-      response.status(200).send(yourBook);
-    }).catch(error => {
+      response.status(200).render('pages/searches/show', {data:yourBook});//key value
+      // response.status(200).send(yourBook);//key value
+    })
+    .catch(error => {
       console.log('ERROR', error);
       response.status(500).send('So sorry, something went wrong.');
     });
@@ -72,13 +78,18 @@ function showHandler(request, response) {
 }
 
 //Constructors
-function Book(result, image) {
+function Book(result) {
   // Based off movie object
+  const pic = 'https://i.imgur.com/J5LVHEL.jpg';
   this.title = result.volumeInfo.title;
-  this.author = result.volumeInfo.arthur;
+  this.authors = result.volumeInfo.authors;
   this.isbn = result.isbn;
-  this.image_url = `https://i.imgur.com/J5LVHEL.jpg`;//For missing images
-  this.description = result.description;
+  this.imageLinks =  result.volumeInfo.imageLinks:
+  if()
+  // this.image_url = ;//For missing images
+  // this.image_url = `https://i.imgur.com/J5LVHEL.jpg`;//For missing images
+
+  this.description = result.volumeInfo.description;
 }
 
 
