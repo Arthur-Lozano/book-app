@@ -36,3 +36,10 @@ img{
   margin: auto;
 }
 
+#title{
+  font-weight: bolder;
+}
+
+#author{
+  font-style: italic;
+}
