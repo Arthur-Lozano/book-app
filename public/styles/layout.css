@@ -60,3 +60,15 @@ input[type='submit'] {
   text-align: center;
 }
 
+.booklist > li > * {
+  margin: 10px 0;
+}
+
+.details > li{
+  height: 700px;
+}
+
+#detailsdescription{
+  height: 500px;
+}
+
