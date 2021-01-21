@@ -6,6 +6,10 @@ fieldset{
   padding:5px;
 }
 
+input{
+  background-color: lightgray;
+}
+
 button{
   background-color:darkgray;
 }
