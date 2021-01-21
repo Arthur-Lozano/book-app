@@ -46,3 +46,17 @@ input[type='submit'] {
   border: none;
   border-radius: 12 px;
 }
+
+
+.booklist > li {
+  width: 250px;
+  height: 500px;
+  padding: 12px 20px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+}
+
