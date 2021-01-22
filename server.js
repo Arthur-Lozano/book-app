@@ -31,51 +31,46 @@ app.use(express.static('./public'));
 app.set('view engine', 'ejs');// How you can tell you're using ejs at a quick glance
 
 
-//
-app.get('/', searchHandler);
-// app.post('/', searchesHandler);
-// app.get('*', errHandler);
-app.get('/index', homeHandler);
+// app.get('/index', homeHandler);
+app.get('/', homePage);
+app.get('/new', searchPage)
+app.post('/searches', searchHandler);
 
-// function searchesHandler(req, res) {
-//   res.status(200).render('pages/searches/new')
-//     .catch(error => {
-//       console.log('ERROR', error);
-//       res.status(500).send('So sorry, something went wrong.');
-//     });
+function homePage(request, response){
+  response.render('pages/index');
+}
 
-// }
-
+function searchPage(request, response){
+  response.render('pages/searches/new');
+}
 
 function searchHandler(request, response) {
-  // console.log('!!!!!!!!!!!', request);
+  console.log('!!!!!!!!!!!', request.body);
   // let SQL = ``
   // const url = `https://www.googleapis.com/books/v1/volumes?q=+intitle:dune`;
-  const url = `https://www.googleapis.com/books/v1/volumes?q=+inauthor:king`;
-  // console.log(url);
-  superagent.get(url)
-    .then(value => {
-      console.log('!!!!!!!!!!!!!!!!', value.body.items);
-      const yourBook = value.body.items.map(current => {
-        return new Book(current);
+  let url = `https://www.googleapis.com/books/v1/volumes?q=`;
+  if (request.body.keyword === 'title' ? url += `+intitle:${request.body.name}` : url += `+inauthor:${request.body.name}`)
+
+    superagent.get(url)
+      .then(value => {
+        console.log('!!!!!!!!!!!!!!!!', value.body.items);
+        const yourBook = value.body.items.map(current => {
+          return new Book(current);
+        });
+        response.status(200).render('pages/searches/show', { data: yourBook });//key value
+        // response.status(200).send(yourBook);//key value
+      })
+      .catch(error => {
+        console.log('ERROR', error);
+        response.status(500).send('So sorry, something went wrong.');
       });
-      response.status(200).render('pages/searches/show', {data:yourBook});//key value
-      // response.status(200).send(yourBook);//key value
-    })
-    .catch(error => {
-      console.log('ERROR', error);
-      response.status(500).send('So sorry, something went wrong.');
-    });
 }
 
 
-function homeHandler(request, response) {
-  response.status(200).render('pages/index');
+function errHandler(request, response) {
+  response.status(500).send('So sorry, something went wrong.');
 }
 
-function showHandler(request, response) {
-  response.status(200).render('pages/searches/show');
-}
 
 //Constructors
 function Book(result) {
@@ -84,14 +79,12 @@ function Book(result) {
   this.title = result.volumeInfo.title;
   this.authors = result.volumeInfo.authors;
   this.isbn = result.isbn;
-  this.imageLinks =  result.volumeInfo.imageLinks:
-  if()
-  // this.image_url = ;//For missing images
-  // this.image_url = `https://i.imgur.com/J5LVHEL.jpg`;//For missing images
-
+  this.imageLinks = result.volumeInfo.imageLinks;
+  if (this.imageLinks === this.imageLinks ? this.imageLinks : pic);
   this.description = result.volumeInfo.description;
 }
 
+app.get('*', errHandler);
 
 // Connect to DB and Start the Web Server
 app.listen(PORT, () => {
