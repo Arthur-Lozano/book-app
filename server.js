@@ -49,7 +49,7 @@ function searchHandler(request, response) {
   // let SQL = ``
   // const url = `https://www.googleapis.com/books/v1/volumes?q=+intitle:dune`;
   let url = `https://www.googleapis.com/books/v1/volumes?q=`;
-  if (request.body.keyword === 'title' ? url += `+intitle:${request.body.name}` : url += `+inauthor:${request.body.name}`)
+  if (request.body.name[0] === 'title' ? url += `+intitle:${request.body.name[1]}` : url += `+inauthor:${request.body.name[1]}`)
 
     superagent.get(url)
       .then(value => {
@@ -79,7 +79,7 @@ function Book(result) {
   this.title = result.volumeInfo.title;
   this.authors = result.volumeInfo.authors;
   this.isbn = result.isbn;
-  this.imageLinks = result.volumeInfo.imageLinks;
+  this.imageLinks = result.volumeInfo.imageLinks || pic;
   if (this.imageLinks === this.imageLinks ? this.imageLinks : pic);
   this.description = result.volumeInfo.description;
 }
