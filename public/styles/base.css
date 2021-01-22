@@ -1,3 +1,4 @@
-body {
-  background-color: bisque;
+
+* {
+  box-sizing: border-box;
 }

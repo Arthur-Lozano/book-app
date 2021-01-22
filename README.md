@@ -3,7 +3,7 @@
 # Project Name
 
 **Author**: Your Name Goes Here
-**Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
+**Version**: 1.0.1 (increment the patch/fix version number if you make more commits past your first submission)
 
 ## Overview
 <!-- Provide a high level overview of what this application is and why you are building it, beyond the fact that it's an assignment for a Code 301 class. (i.e. What's your problem domain?) -->
@@ -64,13 +64,19 @@
 -->
 - Number and name of feature: Lab 11 Feature 5 As a user, I want a simple, clean looking UI so that my application is easy to navigate.
 
-- Estimate of time needed to complete: _____
+- Estimate of time needed to complete: 3 hours
 
-- Start time: _____
+- Start time: 8:30pm-10pm, 1pm-2pm
 
 - Finish time: _____
 
 - Actual time needed to complete: _____
+<span style="color:salmon">body background</span>
+<span style="color:lightgray">input</span>
+<span style="color:darkgray">button</span>
+<span style="color:purple">mobile background color</span>
+body background :salmon:
+
 -->
 - Number and name of feature: Lab 11 Feature 6. As a user, I want the application to have a home page, so that I can see see relevant information
 
