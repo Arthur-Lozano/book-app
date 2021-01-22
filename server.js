@@ -74,13 +74,12 @@ function errHandler(request, response) {
 
 //Constructors
 function Book(result) {
-  // Based off movie object
-  const pic = 'https://i.imgur.com/J5LVHEL.jpg';
+  // const pic = 'https://i.imgur.com/J5LVHEL.jpg';
   this.title = result.volumeInfo.title;
   this.authors = result.volumeInfo.authors;
   this.isbn = result.isbn;
-  this.imageLinks = result.volumeInfo.imageLinks || pic;
-  if (this.imageLinks === this.imageLinks ? this.imageLinks : pic);
+  this.imageLinks = result.volumeInfo.imageLinks.thumbnail;
+  // if (this.imageLinks === result.volumeInfo.imageLinks.thumbnail ? result.volumeInfo.imageLinks.thumbnail : pic);
   this.description = result.volumeInfo.description;
 }
 
