@@ -1,25 +1,50 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <%- include('../layout/head') %>
+  <title>Book Collection</title>
+  <%- include('../layout/head') %>
 </head>
 
 <body>
-    <header>
-        <%- include('../layout/header') %>
-    </header>
-    <main>
-        <h1><span id="badge"><%= saved.length %> </span>Saved Books</h1>
-        <a href="/searches/new"><button>Search</button></a>
-        <div class="book" id="index">
-            <% saved.forEach(book => { %>
-            <%- include('../books/detail', {book: book}) %>
-            <% }) %>
-        </div>
-    </main>
-    <footer></footer>
+  <header>
+    <%- include('../layout/header') %>
+  </header>
+  <main>
+    <h1><span id="badge">
+        <%= saved.length %>
+      </span>Saved Books
+    </h1>
+    <a href="/searches/new"><button>Search</button></a>
+    <div class="book" id="index">
+      <% saved.forEach(book=> { %>
+        <%- include('../books/detail', {book: book}) %>
+          <% }) %>
+    </div>
+
+    <h2>Total books in Database: <%= renderedCOntent.length %>
+    </h2>
+    <ul>
+      <% renderedContent.forEach(book=> { %>
+        <li>img src="<%= book.image_url %>" alt="<%= book.title %>">
+              <p id="title">
+                <%= book.title %>
+              </p>
+              <p id="title">
+                <%= book.author %>
+              </p>
+              <p>
+                <%= book.description %>
+              </p>
+              <button><a href="/books/<%= book.id %>">View Details</a></button></li>
+        <% }) %>
+
+    </ul>
+
+  </main>
+  <footer>
+    <%- include('../layout/footer.ejs') %> 
+  </footer>
 </body>
 
 </html>
