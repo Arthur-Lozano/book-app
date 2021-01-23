@@ -7,7 +7,7 @@
 </head>
 <body>
   <title>Google Book Search </title>
-  <div>
+<div>
     <% data.forEach(value => {%>
   <article>
     <img src="<%= value.imageLinks%>" alt="<%value.title %>">
@@ -15,7 +15,7 @@
     <h2><%= value.authors %></h2>
     <p><%= value.description %></p>
   </article>
-  <% }) %>
+    <% }) %>
 </div>
 
   <!-- <form action="/new.ejs" method="POST">
