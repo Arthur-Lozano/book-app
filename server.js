@@ -30,11 +30,11 @@ app.use(express.static('./public'));
 //Set the view engine
 app.set('view engine', 'ejs');// How you can tell you're using ejs at a quick glance
 
-
+//routes
 // app.get('/index', homeHandler);
 app.get('/', homePage);
 app.get('/new', searchPage)
-app.get('/books/:id', oneBookHandler)
+app.get('/books/:id', singleBookHandler)
 app.post('/searches', searchHandler);
 
 function homePage(request, response){
@@ -91,3 +91,10 @@ app.get('*', errHandler);
 app.listen(PORT, () => {
   console.log(`now listening on port ${PORT}`);
 });
+
+
+
+function getOneBook(req, res) {
+  const id = req.params.book_id;
+  console.log('in the one book function', id);
+  const sql = 'SELECT * FROM booktable WHERE id=$1;';
