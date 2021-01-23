@@ -9,7 +9,11 @@ const express = require('express');
 // const cors = require('cors');
 const cors = require('cors');
 const superagent = require('superagent');
-// const pg = require('pg');
+const pg = require('pg');
+
+// Database Connection Setup
+const client = new pg.Client(process.env.DATABASE_URL);
+client.on('error', err => { throw err; });
 
 // Step 2:  Set up our application/Specify port
 const app = express();
@@ -52,7 +56,7 @@ function searchHandler(request, response) {
   // let SQL = ``
   // const url = `https://www.googleapis.com/books/v1/volumes?q=+intitle:dune`;
   let url = `https://www.googleapis.com/books/v1/volumes?q=`;
-  if (request.body.keyword === 'title' ? url += `+intitle:${request.body.name}` : url += `+inauthor:${request.body.name}`)
+  if (request.body.name[0] === 'title' ? url += `+intitle:${request.body.name[1]}` : url += `+inauthor:${request.body.name[1]}`)
 
     superagent.get(url)
       .then(value => {
@@ -77,19 +81,19 @@ function errHandler(request, response) {
 
 //Constructors
 function Book(result) {
-  // Based off movie object
-  const pic = 'https://i.imgur.com/J5LVHEL.jpg';
+  // const pic = 'https://i.imgur.com/J5LVHEL.jpg';
   this.title = result.volumeInfo.title;
   this.authors = result.volumeInfo.authors;
   this.isbn = result.isbn;
-  this.imageLinks = result.volumeInfo.imageLinks;
-  if (this.imageLinks === this.imageLinks ? this.imageLinks : pic);
+  this.imageLinks = result.volumeInfo.imageLinks.thumbnail;
+  // if (this.imageLinks === result.volumeInfo.imageLinks.thumbnail ? result.volumeInfo.imageLinks.thumbnail : pic);
   this.description = result.volumeInfo.description;
 }
 
 app.get('*', errHandler);
 
 // Connect to DB and Start the Web Server
+
 app.listen(PORT, () => {
   console.log(`now listening on port ${PORT}`);
 });
@@ -120,5 +124,22 @@ client.connect()
   })
   .catch(error => {
     console.log(error);
+  });
+
+=======
+// app.listen(PORT, () => {
+//   console.log(`now listening on port ${PORT}`);
+// });
+
+// Connect to DB and Start the Web Server
+client.connect()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log('Server up on', PORT);
+      console.log(`Connected to database ${client.connectionParameters.database}`);
+    });
+  })
+  .catch(err => {
+    console.log('ERROR', err);
   });
 
