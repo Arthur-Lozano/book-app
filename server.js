@@ -34,6 +34,7 @@ app.set('view engine', 'ejs');// How you can tell you're using ejs at a quick gl
 // app.get('/index', homeHandler);
 app.get('/', homePage);
 app.get('/new', searchPage)
+app.get('/books/:id', oneBookHandler)
 app.post('/searches', searchHandler);
 
 function homePage(request, response){
