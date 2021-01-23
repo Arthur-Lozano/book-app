@@ -16,7 +16,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(cors());
 
-
+// Creating postgres client added by mc
+const client = new pg.Client(process.env.DATABASE_URL);
 // Database Connection Setup
 // const client = new pg.Client(process.env.DATABASE_URL);//Take in path of database server
 // client.connect(); // Use this when database is set up
@@ -34,14 +35,15 @@ app.set('view engine', 'ejs');// How you can tell you're using ejs at a quick gl
 // app.get('/index', homeHandler);
 app.get('/', homePage);
 app.get('/new', searchPage)
+//book handler added by mc
 app.get('/books/:id', singleBookHandler)
 app.post('/searches', searchHandler);
 
-function homePage(request, response){
+function homePage(request, response) {
   response.render('pages/index');
 }
 
-function searchPage(request, response){
+function searchPage(request, response) {
   response.render('pages/searches/new');
 }
 
@@ -93,8 +95,30 @@ app.listen(PORT, () => {
 });
 
 
-
-function getOneBook(req, res) {
-  const id = req.params.book_id;
+// single book handler function added by mc
+function singleBookHandler(request, response) {
+  const id = require.params.book_id;
   console.log('in the one book function', id);
   const sql = 'SELECT * FROM booktable WHERE id=$1;';
+  const safeValues = [id];
+  client.query(sql, safeValues)
+    .then((results) => {
+      console.log(results);
+      const myFavBook = results.rows[0];
+      response.render('pages/books/detail', { value: myFavBook });
+    })
+    .catch((error) => {
+      console.log(error);
+      response.render('pages/error');
+    });
+}
+client.connect()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`App Listening on port: ${PORT}`);
+    });
+  })
+  .catch(error => {
+    console.log(error);
+  });
+
