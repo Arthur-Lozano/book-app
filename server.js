@@ -9,7 +9,11 @@ const express = require('express');
 // const cors = require('cors');
 const cors = require('cors');
 const superagent = require('superagent');
-// const pg = require('pg');
+const pg = require('pg');
+
+// Database Connection Setup
+const client = new pg.Client(process.env.DATABASE_URL);
+client.on('error', err => { throw err; });
 
 // Step 2:  Set up our application/Specify port
 const app = express();
@@ -86,6 +90,18 @@ function Book(result) {
 app.get('*', errHandler);
 
 // Connect to DB and Start the Web Server
-app.listen(PORT, () => {
-  console.log(`now listening on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`now listening on port ${PORT}`);
+// });
+
+// Connect to DB and Start the Web Server
+client.connect()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log('Server up on', PORT);
+      console.log(`Connected to database ${client.connectionParameters.database}`);
+    });
+  })
+  .catch(err => {
+    console.log('ERROR', err);
+  });
