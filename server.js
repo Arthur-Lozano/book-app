@@ -20,7 +20,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(cors());
 
-
+// Creating postgres client added by mc
+const client = new pg.Client(process.env.DATABASE_URL);
 // Database Connection Setup
 // const client = new pg.Client(process.env.DATABASE_URL);//Take in path of database server
 // client.connect(); // Use this when database is set up
@@ -34,17 +35,19 @@ app.use(express.static('./public'));
 //Set the view engine
 app.set('view engine', 'ejs');// How you can tell you're using ejs at a quick glance
 
-
+//routes
 // app.get('/index', homeHandler);
 app.get('/', homePage);
 app.get('/new', searchPage)
+//book handler added by mc
+app.get('/books/:id', singleBookHandler)
 app.post('/searches', searchHandler);
 
-function homePage(request, response){
+function homePage(request, response) {
   response.render('pages/index');
 }
 
-function searchPage(request, response){
+function searchPage(request, response) {
   response.render('pages/searches/new');
 }
 
@@ -90,6 +93,40 @@ function Book(result) {
 app.get('*', errHandler);
 
 // Connect to DB and Start the Web Server
+
+app.listen(PORT, () => {
+  console.log(`now listening on port ${PORT}`);
+});
+
+
+// single book handler function added by mc
+function singleBookHandler(request, response) {
+  const id = require.params.book_id;
+  console.log('in the one book function', id);
+  const sql = 'SELECT * FROM booktable WHERE id=$1;';
+  const safeValues = [id];
+  client.query(sql, safeValues)
+    .then((results) => {
+      console.log(results);
+      const myFavBook = results.rows[0];
+      response.render('pages/books/detail', { value: myFavBook });
+    })
+    .catch((error) => {
+      console.log(error);
+      response.render('pages/error');
+    });
+}
+client.connect()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`App Listening on port: ${PORT}`);
+    });
+  })
+  .catch(error => {
+    console.log(error);
+  });
+
+=======
 // app.listen(PORT, () => {
 //   console.log(`now listening on port ${PORT}`);
 // });
@@ -105,3 +142,4 @@ client.connect()
   .catch(err => {
     console.log('ERROR', err);
   });
+
