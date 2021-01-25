@@ -14,3 +14,7 @@
   <img src="<% valuse.image_url %>" alt="<%= value.title %>">
   <%- include('edit.ejs') %>
   <form action="/update/<%= value.id %>?_method = " delete" method="post">
+    <input type="hidden" name="id" value="<= value.id %>" />
+    <button type="submit">Delete Book</button>
+   </form>
+   
