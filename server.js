@@ -6,38 +6,37 @@ require('dotenv').config();
 
 // Step 1:  Bring in our modules/dependencies
 const express = require('express');
-// const cors = require('cors');
-const cors = require('cors');
-const superagent = require('superagent');
-// const pg = require('pg');
-
-// Step 2:  Set up our application/Specify port
 const app = express();
-const PORT = process.env.PORT || 3000;
+const cors = require('cors');
+require('ejs');
+const superagent = require('superagent');
+const pg = require('pg');
+const methodOverride = require('method-override');
+
+
+// Step 2:  Set up our application
+
 app.use(cors());
+app.set('view engine', 'ejs');
+app.use(express.static('./public'));
+app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
+
+// declare port for server
+const PORT = process.env.PORT || 3000;
 
 // Creating postgres client added by mc
 const client = new pg.Client(process.env.DATABASE_URL);
-// Database Connection Setup
-// const client = new pg.Client(process.env.DATABASE_URL);//Take in path of database server
-// client.connect(); // Use this when database is set up
-// client.on('error', err => { throw err; });
-
-//Application Middleware // EXRPESS MIDDLEWARE// Database Connection Setup
-app.use(express.urlencoded({ extended: true }));//Double check
-app.use(express.static('./public'));
-
-
-//Set the view engine
-app.set('view engine', 'ejs');// How you can tell you're using ejs at a quick glance
 
 //routes
 // app.get('/index', homeHandler);
 app.get('/', homePage);
 app.get('/new', searchPage)
-//book handler added by mc
-app.get('/books/:id', singleBookHandler)
 app.post('/searches', searchHandler);
+app.post('/books', addBookToDatabase);
+app.get('/books/:book_id', singleBookHandler)
+app.delete('/update/:book_id', deleteBook);
+app.get('*', handleError);
 
 function homePage(request, response) {
   response.render('pages/index');
