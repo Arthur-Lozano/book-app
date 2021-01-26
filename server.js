@@ -38,6 +38,7 @@ app.get('/books/:book_id', singleBookHandler)
 app.delete('/update/:book_id', deleteBook);
 app.get('*', errHandler);
 
+// constuctor functions
 function homePage(request, response) {
   const sql = 'SELECT * FROM booktable;';
   return client.query(sql)
@@ -50,62 +51,15 @@ function homePage(request, response) {
       response.render('pages/error');
     });
 }
-
-function searchPage(request, response) {
-  response.render('pages/searches/new');
+function deleteBook(request, response) {
+  const id = request.params.book - id;
+  let sql = 'DELETE FROM booktable WHERE id=$1;';
+  let safeValues = [id];
+  client.query(sql, safeValues);
+  response.status(200).redirect('/');
 }
-
-function searchHandler(request, response) {
-  console.log('!!!!!!!!!!!', request.body);
-  // let SQL = ``
-  // const url = `https://www.googleapis.com/books/v1/volumes?q=+intitle:dune`;
-  let url = `https://www.googleapis.com/books/v1/volumes?q=`;
-  if (request.body.keyword === 'title' ? url += `+intitle:${request.body.name}` : url += `+inauthor:${request.body.name}`)
-
-    superagent.get(url)
-      .then(value => {
-        console.log('!!!!!!!!!!!!!!!!', value.body.items);
-        const yourBook = value.body.items.map(current => {
-          return new Book(current);
-        });
-        response.status(200).render('pages/searches/show', { data: yourBook });//key value
-        // response.status(200).send(yourBook);//key value
-      })
-      .catch(error => {
-        console.log('ERROR', error);
-        response.status(500).send('So sorry, something went wrong.');
-      });
-}
-
-
-function errHandler(request, response) {
-  response.status(500).send('So sorry, something went wrong.');
-}
-
-
-//Constructors
-function Book(result) {
-  // Based off movie object
-  const pic = 'https://i.imgur.com/J5LVHEL.jpg';
-  this.title = result.volumeInfo.title;
-  this.authors = result.volumeInfo.authors;
-  this.isbn = result.isbn;
-  this.imageLinks = result.volumeInfo.imageLinks;
-  if (this.imageLinks === this.imageLinks ? this.imageLinks : pic);
-  this.description = result.volumeInfo.description;
-}
-
-
-
-// Connect to DB and Start the Web Server
-app.listen(PORT, () => {
-  console.log(`now listening on port ${PORT}`);
-});
-
-
-// single book handler function added by mc
 function singleBookHandler(request, response) {
-  const id = require.params.book_id;
+  const id = request.params.book_id;
   console.log('in the one book function', id);
   const sql = 'SELECT * FROM booktable WHERE id=$1;';
   const safeValues = [id];
@@ -120,6 +74,62 @@ function singleBookHandler(request, response) {
       response.render('pages/error');
     });
 }
+function searchHandler(request, response) {
+  response.render('searches/new.ejs');
+}
+
+function addBookToDatabase(request, response) {
+  const { authors, title, isbn, image, description } = request.body;
+  const sql = 'INSERT INTO booktable (author, title, isbn, image_url, description) VALUES ($1,$2,$3,$4,$5) RETURNING id;';
+  const safeValues = [authors, title, isbn, image, description];
+  client.query(sql, safeValues)
+    .then((idFromSQL) => {
+      console.log(idFromSQL);
+      response.redirect(`books/${idFromSQL.rows[0].id}`);
+    }).catch((error) => {
+      console.log(error);
+      response.render('pages/error');
+    });
+}
+
+function searchPage(request, response) {
+  console.log(request.body);
+  const searchQuery = request.body.searchQuery;
+  const searchType = request.body.searchType;
+  console.log(request.body);
+  let URL = `https://www.googleapis.com/books/v1/volumes?q=in${request.body.searchType}:${request.body.searchQuery}`;
+  if (searchType === 'title') { URL += `+intitle:${searchQuery}`; }
+  if (searchType === 'author') { URL += `+inauthor:${searchQuery}`; }
+  console.log('URL', URL);
+  superagent.get(URL)
+    .then(data => {
+      console.log(data.body.items[1]);
+      const book = data.body.items;
+      const finalBookArray = book.map(books => new Book(books.volumeInfo));
+      response.render('searches/show', { renderContent: finalBookArray });
+    });
+
+}
+//Book Construtor
+
+function Book(book) {
+  this.title = book.title ? book.title : 'no title found';
+  this.description = book.description ? book.description : 'no description found';
+  this.authors = book.authors ? book.authors[0] : 'no author found';
+  this.isbn = book.industryIdentifiers;
+  //splice method
+  //
+  console.log('url', URL);
+}
+
+
+
+
+function errHandler(request, response) {
+  response.status(404).render('pages/error');
+}
+
+
 client.connect()
   .then(() => {
     app.listen(PORT, () => {
