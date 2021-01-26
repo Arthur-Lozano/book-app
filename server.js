@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 
 // Creating postgres client added by mc
-const client = new pg.Client(process.env.DATABASE_URL);
+
 // Database Connection Setup
 // const client = new pg.Client(process.env.DATABASE_URL);//Take in path of database server
 // client.connect(); // Use this when database is set up
@@ -126,7 +126,7 @@ client.connect()
     console.log(error);
   });
 
-=======
+
 // app.listen(PORT, () => {
 //   console.log(`now listening on port ${PORT}`);
 // });
