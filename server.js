@@ -11,7 +11,14 @@ const cors = require('cors');
 require('ejs');
 const superagent = require('superagent');
 const pg = require('pg');
+
 const methodOverride = require('method-override');
+
+
+// Database Connection Setup
+const client = new pg.Client(process.env.DATABASE_URL);
+client.on('error', err => { throw err; });
+
 
 
 // Step 2:  Set up our application
@@ -40,6 +47,7 @@ app.get('*', errHandler);
 
 // constuctor functions
 function homePage(request, response) {
+
   const sql = 'SELECT * FROM booktable;';
   return client.query(sql)
     .then(results => {
@@ -58,6 +66,7 @@ function deleteBook(request, response) {
   client.query(sql, safeValues);
   response.status(200).redirect('/');
 }
+
 function singleBookHandler(request, response) {
   const id = request.params.book_id;
   console.log('in the one book function', id);
@@ -138,5 +147,22 @@ client.connect()
   })
   .catch(error => {
     console.log(error);
+  });
+
+
+// app.listen(PORT, () => {
+//   console.log(`now listening on port ${PORT}`);
+// });
+
+// Connect to DB and Start the Web Server
+client.connect()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log('Server up on', PORT);
+      console.log(`Connected to database ${client.connectionParameters.database}`);
+    });
+  })
+  .catch(err => {
+    console.log('ERROR', err);
   });
 
