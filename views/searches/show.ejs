@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Book Collection</title>
+  <%- include('../layout/head.ejs') %>
+
+</head>
+
+<body>
+  <header><%- include('../layout/header.ejs') %></header>
+  <main>
+    <section>
+    <ul>
+      <% renderContent.forEach(book => { %>
+    
+      <li>
+        
+        <h2><%= book.title %></h2>
+        <p><%= book.authors %> </p>
+        <p><%= book.description %></p>
+      </li>
+      <form id="addtoCollection" action="/books" method="post">
+        <fieldset>
+          <input type="hidden" name="title" value="<%= book.title %>">
+          <input type="hidden" name="authors" value="<%= book.authors %>">
+          <input type="hidden" name="description" value="<%= book.description %>">
+          <input type="hidden" name="isbn" value="<%= book.isbn %>">
+          <input type="hidden" name="image" value="<%= book.image %>">
+          <input type="hidden" name="submit" value="<%= book.submit %>">
+          <button type="submit">Add This Fine Book to my Database Please</button>
+        </fieldset>
+      </form>
+      <% }) %>
+
+
+    </ul>
+
+  </section>
+
+  </main>
+
+  <footer>
+    <%- include('../layout/footer.ejs') %>
+  </footer>
+
+</body>
+
+</html>
