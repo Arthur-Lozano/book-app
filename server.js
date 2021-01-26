@@ -36,10 +36,19 @@ app.post('/searches', searchHandler);
 app.post('/books', addBookToDatabase);
 app.get('/books/:book_id', singleBookHandler)
 app.delete('/update/:book_id', deleteBook);
-app.get('*', handleError);
+app.get('*', errHandler);
 
 function homePage(request, response) {
-  response.render('pages/index');
+  const sql = 'SELECT * FROM booktable;';
+  return client.query(sql)
+    .then(results => {
+      console.log(results.rows);
+      response.status(200).render('pages/index');
+    })
+    .catch((error) => {
+      console.log(error);
+      response.render('pages/error');
+    });
 }
 
 function searchPage(request, response) {
@@ -86,7 +95,7 @@ function Book(result) {
   this.description = result.volumeInfo.description;
 }
 
-app.get('*', errHandler);
+
 
 // Connect to DB and Start the Web Server
 app.listen(PORT, () => {
