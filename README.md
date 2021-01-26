@@ -16,6 +16,7 @@ The user searches for a book based on the title or author in the search filed on
 <!-- Provide a detailed description of the application design. What technologies (languages, libraries, etc) you're using, and any other relevant design information. -->
 We used google book api, javascript, organized folders and files using SMACCS and ejs formatting. The team used treelo to divide the work and slack and remo to stay in contact"
 
+
 ## Change Log
 <!-- Use this area to document the iterative changes made to your application as each feature is successfully implemented. Use time stamps. Here's an examples:
 
