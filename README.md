@@ -34,6 +34,7 @@ We used google book api, javascript, organized folders and files using SMACCS an
 - Finish time: 10pm
 
 - Actual time needed to complete: 3 1/2 hours
+
 -->
 - Number and name of feature: Lab 11 Feature 2 As a user, I want to search the Google Books API so that I can view the results of my search.
 
@@ -44,6 +45,7 @@ We used google book api, javascript, organized folders and files using SMACCS an
 - Finish time: 6:30 pm
 
 - Actual time needed to complete: 2 1/2 hours
+
 -->
 - Number and name of feature: Lab 11 Feature 3 As a user, I want to be able to browse the search results.
 
@@ -53,6 +55,7 @@ We used google book api, javascript, organized folders and files using SMACCS an
 - Finish time: 10pm and 6pm
 
 - Actual time needed to complete: 6 hours
+
 -->
 - Number and name of feature: Lab 11 Feature 4 As a user, I want to view any error messages that occur during the usage of my book list application so that I know if something has gone wrong.
 
@@ -63,6 +66,7 @@ We used google book api, javascript, organized folders and files using SMACCS an
 - Finish time: 6pm
 
 - Actual time needed to complete: 2 hours
+
 -->
 - Number and name of feature: Lab 11 Feature 5 As a user, I want a simple, clean looking UI so that my application is easy to navigate.
 
@@ -74,85 +78,92 @@ We used google book api, javascript, organized folders and files using SMACCS an
 
 - Actual time needed to complete: 2 1/2 hours
 
-
 -->
 - Number and name of feature: Lab 11 Feature 6. As a user, I want the application to have a home page, so that I can see see relevant information
 
-- Estimate of time needed to complete: _____
+- Estimate of time needed to complete: 4 hours
 
-- Start time: _____
+- Start time: 9pm and 3pm
 
-- Finish time: _____
+- Finish time: 10pm and 6pm
 
-- Actual time needed to complete: _____
+- Actual time needed to complete: 4 hours
+
 -->
 - Number and name of feature: Lab 12 Feature 1 As a user, I want all of my saved books to be displayed on the home page so that I can view all of the books from my collection in a single view.
 
-- Estimate of time needed to complete: _____
+- Estimate of time needed to complete: 3 hours
 
-- Start time: _____
+- Start time: 830pm
 
-- Finish time: _____
+- Finish time: 11pm
 
-- Actual time needed to complete: _____
+- Actual time needed to complete: 2 1/2 hours
+
 -->
 - Number and name of feature: Lab 12 Feature 2 As a user, I want to request information about a single book so that I can view its additional details and share it by URL.
 
-- Estimate of time needed to complete: _____
+- Estimate of time needed to complete: 5 hours
 
-- Start time: _____
+- Start time: 4pm
 
-- Finish time: _____
+- Finish time: 6pm
 
-- Actual time needed to complete: _____
+- Actual time needed to complete: 2 hours
+
 -->
 - Number and name of feature: Lab 12 Feature 3 As a user, I want the ability to add new books to my application so that I can save search results.
 
-- Estimate of time needed to complete: _____
+- Estimate of time needed to complete: 2 hours
 
-- Start time: _____
+- Start time: 830pm
 
-- Finish time: _____
+- Finish time: 10pm
 
-- Actual time needed to complete: _____
+- Actual time needed to complete: 1 1/2 hours
+
 -->
 - Number and name of feature: Lab 12 Feature 4 As a user, I want the application to be designed in a consistent way so that I do not experience any down time or slow load times.
 
-- Estimate of time needed to complete: _____
+- Estimate of time needed to complete: 4 hours
 
-- Start time: _____
+- Start time: 1pm
 
-- Finish time: _____
+- Finish time: 4 pm
 
-- Actual time needed to complete: _____
+- Actual time needed to complete: 3 hours
+
 -->
 - Number and name of feature: Lab 12 Feature 5 As a user, I want a simple, clean-looking UI so that my application is easy to navigate.
 
-- Estimate of time needed to complete: _____
+- Estimate of time needed to complete: 4 hours
 
-- Start time: _____
+- Start time: 4pm
 
-- Finish time: _____
+- Finish time: 5:30pm
 
-- Actual time needed to complete: _____
+- Actual time needed to complete: 1 1/2 hours
+
 -->
 - Number and name of feature: Lab 13 Feature 1 As a user, I want to update the details of a book so that it displays the way I want it to, according to my personalized preferences. 
 
-- Estimate of time needed to complete: _____
+- Estimate of time needed to complete: 3 hours
 
-- Start time: _____
+- Start time: 2pm
 
-- Finish time: _____
+- Finish time: 3 pm
 
-- Actual time needed to complete: _____
+- Actual time needed to complete: 1 hour
+
 -->
 - Number and name of feature: Lab 13 Feature 2 As a user, I want to remove books from my collection so that it accurately represents my favorite books.
 
-- Estimate of time needed to complete: _____
+- Estimate of time needed to complete: 3 hours
 
-- Start time: _____
+- Start time: 9 pm
 
-- Finish time: _____
+- Finish time: 10 pm
 
-- Actual time needed to complete: _____
--->
+- Actual time needed to complete: 1 hour
+
+
