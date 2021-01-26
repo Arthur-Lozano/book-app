@@ -8,4 +8,5 @@ $('#callForm').on('click', showTemplate);
 function showTemplate() {
   console.log('inside of the function');
   $('#edit').show();
-};
+
+}
